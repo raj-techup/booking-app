@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Appointments</title>
+
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
+
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    .accepted {
+      color: green;
+    }
+    .cancelled {
+      color: red;
+    }
+    .mt-3{
+      margin-top: 20px;
+    }
+
+    .center{
+      display: flex;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <h4 class="center">Appointments</h4>
+
+  <% if (bookings && bookings.length > 0) { %>
+    <table class="mt-3">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Customer Note</th>
+          <th>Start Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% bookings.forEach(booking => { %>
+          <tr>
+            <td class="<%= booking.status === 'ACCEPTED' ? 'accepted' : booking.status === 'CANCELLED_BY_SELLER' ? 'cancelled' : '' %>">
+              <%= booking.status === 'ACCEPTED' ? 'ACCEPTED' : booking.status === 'CANCELLED_BY_SELLER' ? 'CANCELLED' : booking.status %>
+            </td>
+            <td><%= booking.customer_note %></td>
+            <td><%= new Date(booking.start_at).toLocaleString() %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No bookings available.</p>
+  <% } %>
+
+</body>
+</html>
